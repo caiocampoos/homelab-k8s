@@ -4,26 +4,11 @@
   gather_facts: false
   become: true
   tasks:
-    - name: Install docker
-      apt:
-        name: docker.io
-        update_cache: true
-        cache_valid_time: 86400
-        state: present
     - name: Install microk8s
       snap:
         name: microk8s
         state: present
        classic: yes
-
-    - name: Add user to Docker and Microk8s groups, they will need to logout and in again
-      user:
-        name: '{{ lookup("env", "USER") }}'
-        state: present
-        groups:
-          - docker
-          - microk8s
-        append: true
     - name: Add alias to kubectl
       become: false
       lineinfile:
